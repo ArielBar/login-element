@@ -1,26 +1,25 @@
-import { EventEmitter,Component, ViewEncapsulation, Input, Output, ApplicationRef, OnInit } from '@angular/core';
+import { EventEmitter,Component, ViewEncapsulation, Input, Output, ApplicationRef, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { RendererComponent } from './renderer-component';
 
 @Component({
   selector: 'login-element',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
+export class AppComponent extends RendererComponent implements OnInit{
 
   @Input() title = 'login-element';
   @Output() clickOnMe = new EventEmitter<any>();
-  xxx:any;
+  xxx$:any;
 
- constructor(private http : HttpClient){
-    
+ constructor(private http : HttpClient, protected injector : Injector){
+    super(injector);
  }
 
  ngOnInit(): void {
-   this.http.get('https://jsonplaceholder.typicode.com/posts/42').subscribe((x : any)=>
-   {
-      this.xxx = x;
-   });
+  this.xxx$ = this.http.get('https://jsonplaceholder.typicode.com/posts/42');
 }
 
   toggle : boolean = false;
@@ -28,6 +27,8 @@ export class AppComponent implements OnInit{
   test(){
     //alert("click test is working!!");
     this.toggle = !this.toggle;
+    console.log(this.toggle);
+    this.markForCheck();
     //this.clickOnMe.emit();
   }
 }
