@@ -1,6 +1,6 @@
 import { EventEmitter,Component, ViewEncapsulation, Input, Output, ApplicationRef, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RendererComponent } from './renderer-component';
+import { CustomChangeDetector } from './custom-change-detector';
 
 @Component({
   selector: 'login-element',
@@ -8,14 +8,16 @@ import { RendererComponent } from './renderer-component';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent extends RendererComponent implements OnInit{
+export class AppComponent implements OnInit{
 
   @Input() title = 'login-element';
   @Output() clickOnMe = new EventEmitter<any>();
   xxx$:any;
 
+  cd : CustomChangeDetector;
+
  constructor(private http : HttpClient, protected injector : Injector){
-    super(injector);
+    this.cd = new CustomChangeDetector(this.injector);
  }
 
  ngOnInit(): void {
@@ -28,7 +30,7 @@ export class AppComponent extends RendererComponent implements OnInit{
     //alert("click test is working!!");
     this.toggle = !this.toggle;
     console.log(this.toggle);
-    this.markForCheck();
+    this.cd.markForCheck();
     //this.clickOnMe.emit();
   }
 }

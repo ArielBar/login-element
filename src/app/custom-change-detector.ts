@@ -1,6 +1,6 @@
 import { Injector, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 
-export class RendererComponent{
+export class CustomChangeDetector{
     
     cd: ChangeDetectorRef;
     app: ApplicationRef;
@@ -12,6 +12,26 @@ export class RendererComponent{
 
     markForCheck(){
         this.cd.markForCheck();
+        this.app.tick();
+    }
+
+    checkNoChanges(){
+        this.cd.checkNoChanges();
+        this.app.tick();
+    }
+
+    detach(){
+        this.cd.detach();
+        this.app.tick();
+    }
+
+    detectChanges(){
+        this.cd.detectChanges();
+        this.app.tick();
+    }
+
+    reattach(){
+        this.cd.reattach();
         this.app.tick();
     }
 }
