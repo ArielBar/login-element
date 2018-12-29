@@ -28,7 +28,7 @@ export class AppComponent extends ComponentCanDetectChanges implements OnInit{
     //alert("click test is working!!");
     this.toggle = !this.toggle;
     console.log(this.toggle);
-    this.cd.markForCheck();
+    this.markForCheck();
     //this.clickOnMe.emit();
   }
 }
