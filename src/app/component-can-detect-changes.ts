@@ -1,6 +1,6 @@
 import { Injector, ChangeDetectorRef, ApplicationRef } from "@angular/core";
 
-export class CustomChangeDetector{
+export class ComponentCanDetectChanges{
     
     cd: ChangeDetectorRef;
     app: ApplicationRef;

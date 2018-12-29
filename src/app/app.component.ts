@@ -1,6 +1,6 @@
 import { EventEmitter,Component, ViewEncapsulation, Input, Output, ApplicationRef, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Injector } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CustomChangeDetector } from './custom-change-detector';
+import { ComponentCanDetectChanges } from './component-can-detect-changes';
 
 @Component({
   selector: 'login-element',
@@ -8,16 +8,14 @@ import { CustomChangeDetector } from './custom-change-detector';
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
+export class AppComponent extends ComponentCanDetectChanges implements OnInit{
 
   @Input() title = 'login-element';
   @Output() clickOnMe = new EventEmitter<any>();
   xxx$:any;
 
-  cd : CustomChangeDetector;
-
  constructor(private http : HttpClient, protected injector : Injector){
-    this.cd = new CustomChangeDetector(this.injector);
+    super(injector);
  }
 
  ngOnInit(): void {
