@@ -7,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PushPipe } from './push.pipe';
+import { TestModule } from './test/test.module';
+import { SomeComponent } from './test/some/some.component';
 
 @NgModule({
   declarations: [
@@ -16,16 +18,24 @@ import { PushPipe } from './push.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    TestModule
   ],
   providers: [],
-  entryComponents: [AppComponent]
+  entryComponents: [AppComponent,SomeComponent]
 })
 export class AppModule {
+
   constructor(private injector: Injector) {
-    const strategyFactory = new ElementZoneStrategyFactory(AppComponent, this.injector);
-    const el = createCustomElement(AppComponent, { injector: this.injector,strategyFactory });
-    customElements.define('login-element', el);
+    const elements: any[] = [
+      [AppComponent, 'login-element'],
+      [SomeComponent, 'some-element']
+    ];
+
+    for (const [component, name] of elements) {
+      const el = createCustomElement(component, { injector: this.injector });
+      customElements.define(name, el);
+    }
   }
   ngDoBootstrap() {
   }
