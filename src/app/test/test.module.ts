@@ -11,7 +11,8 @@ import { ElementZoneStrategyFactory } from 'elements-zone-strategy';
   imports: [
     CommonModule,
     TestRoutingModule
-  ],
-  exports:[SomeComponent]
+  ]
 })
-export class TestModule {}
+export class TestModule {
+  
+}

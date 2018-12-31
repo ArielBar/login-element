@@ -18,17 +18,14 @@ import { SomeComponent } from './test/some/some.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    TestModule
+    HttpClientModule
   ],
-  providers: [],
-  entryComponents: [AppComponent,SomeComponent]
+  entryComponents: [SomeComponent],
+  bootstrap: false ? [AppComponent] :[]
 })
 export class AppModule {
-
   constructor(private injector: Injector) {
     const elements: any[] = [
-      [AppComponent, 'login-element'],
       [SomeComponent, 'some-element']
     ];
 
@@ -37,6 +34,7 @@ export class AppModule {
       customElements.define(name, el);
     }
   }
+
   ngDoBootstrap() {
   }
 }
